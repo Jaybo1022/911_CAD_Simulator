@@ -4307,6 +4307,9 @@
         }
 
         function startRecording() {
+            const silentAudio = new Audio()
+            silentAudio.play().catch(() => {});
+
             if (mediaRecorder && !isRecording) {
                 audioChunks = [];
                 mediaRecorder.start();
