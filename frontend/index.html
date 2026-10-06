@@ -1168,6 +1168,8 @@
         let firstFireArrived = false;
         let radioEnRoutePaused = false;
 
+	const API_BASE = 'https://nine11-cad-simulator.onrender.com'
+
         // Update current time
         function updateTime() {
             const now = new Date();
@@ -1212,7 +1214,7 @@
         
         async function loadRunCards() {
             try {
-                const response = await fetch('/api/run-cards');
+                const response = await fetch('${API_BASE}/api/run-cards');
                 const data = await response.json();
                 
                 if (data.status === 'success') {
@@ -1298,7 +1300,7 @@
 
         function openOffDutyModal() {
             // Populate the dropdown with active units from API
-            fetch('/api/active-units')
+            fetch('${API_BASE}/api/active-units')
                 .then(response => response.json())
                 .then(data => {
                     const select = document.getElementById('off-duty-callsign');
@@ -1329,7 +1331,7 @@
         // Unit Details Modal functions
         function openUnitDetailsModal(callSign) {
             // Fetch unit details from the current units data
-            fetch('/api/active-units')
+            fetch('${API_BASE}/api/active-units')
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
@@ -1373,7 +1375,7 @@
         // Field-Initiated Incident Modal functions
         function openFieldIncidentModal() {
             // Populate the dropdown with active units from API
-            fetch('/api/active-units')
+            fetch('${API_BASE}/api/active-units')
                 .then(response => response.json())
                 .then(data => {
                     const select = document.getElementById('field-incident-unit');
@@ -1438,7 +1440,7 @@
             const callSign = document.getElementById('off-duty-callsign').value;
             
             try {
-                const response = await fetch('/api/off-duty', {
+                const response = await fetch('${API_BASE}/api/off-duty', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ call_sign: callSign })
@@ -1473,7 +1475,7 @@
             };
 
             try {
-                const response = await fetch('/api/field-incident', {
+                const response = await fetch('${API_BASE}/api/field-incident', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -1539,7 +1541,7 @@
             };
             
             try {
-                const response = await fetch('/api/update-unit', {
+                const response = await fetch('${API_BASE}/api/update-unit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -1576,7 +1578,7 @@
             };
 
             try {
-                const response = await fetch('/api/on-duty', {
+                const response = await fetch('${API_BASE}/api/on-duty', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -1603,7 +1605,7 @@
             const dispositionCode = document.getElementById('disposition-code').value;
             
             try {
-                const response = await fetch('/api/clear-incident', {
+                const response = await fetch('${API_BASE}/api/clear-incident', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1644,7 +1646,7 @@
             };
 
             try {
-                const response = await fetch('/api/new-incident', {
+                const response = await fetch('${API_BASE}/api/new-incident', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -1672,7 +1674,7 @@
         // Load active units
         async function loadActiveUnits() {
             try {
-                const response = await fetch('/api/active-units');
+                const response = await fetch('${API_BASE}/api/active-units');
                 const data = await response.json();
                 
                 console.log('Units data:', data); // Debug logging
@@ -1790,7 +1792,7 @@
         // Load active incidents
         async function loadActiveIncidents() {
             try {
-                const response = await fetch('/api/active-incidents');
+                const response = await fetch('${API_BASE}/api/active-incidents');
                 const data = await response.json();
                 
                 console.log('Incidents data:', data); // Debug logging
@@ -1853,8 +1855,8 @@
 
             try {
                 const [incidentResponse, unitsResponse] = await Promise.all([
-                    fetch(`/api/incident/${incidentId}`),
-                    fetch('/api/active-units')
+                    fetch(`${API_BASE}/api/incident/${incidentId}`),
+                    fetch('${API_BASE}/api/active-units')
                 ]);
                 const incidentData = await incidentResponse.json();
                 const unitsData = await unitsResponse.json();
@@ -2125,7 +2127,7 @@
             }
 
             try {
-                const response = await fetch('/api/dispatch', {
+                const response = await fetch('${API_BASE}/api/dispatch', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -2174,7 +2176,7 @@
             
             for (const callSign of callSigns) {
                 try {
-                    const response = await fetch('/api/dispatch', {
+                    const response = await fetch('${API_BASE}/api/dispatch', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -2369,7 +2371,7 @@
             
             // Fetch and play the dispatch readout
             try {
-                const response = await fetch('/api/tts', {
+                const response = await fetch('${API_BASE}/api/tts', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text: readoutText, source: 'radio' })
@@ -2532,7 +2534,7 @@
             }
 
             try {
-                const response = await fetch('/api/unit-status', {
+                const response = await fetch('${API_BASE}/api/unit-status', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -2641,7 +2643,7 @@
             }
 
             try {
-                const response = await fetch('/api/add-comment', {
+                const response = await fetch('${API_BASE}/api/add-comment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -2695,7 +2697,7 @@
             btn.innerHTML = '<span class="spinner"></span> Querying...';
 
             try {
-                const response = await fetch('/api/ncic-vehicle-query', {
+                const response = await fetch('${API_BASE}/api/ncic-vehicle-query', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -2769,7 +2771,7 @@
             btn.innerHTML = '<span class="spinner"></span> Querying...';
 
             try {
-                const response = await fetch('/api/ncic-subject-query', {
+                const response = await fetch('${API_BASE}/api/ncic-subject-query', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -3125,7 +3127,7 @@
 
         function playInitialStatement(line) {
             // Send initial statement to backend to get TTS, then play it
-            fetch('/api/voice/transcribe', {
+            fetch('${API_BASE}/api/voice/transcribe', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -3371,7 +3373,7 @@
 
         async function playDispatcherTTS(text, channelName) {
             try {
-                const response = await fetch('/api/tts', {
+                const response = await fetch('${API_BASE}/api/tts', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text, source: 'radio' })
@@ -3414,7 +3416,7 @@
             // Update unit status in the database
             const newStatus = call.type === 'enroute' ? 'EN' : 'AR';
             try {
-                await fetch('/api/unit-status', {
+                await fetch('${API_BASE}/api/unit-status', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -3428,7 +3430,7 @@
                 if (call.type === 'arrived' && call.message.includes('on scene,')) {
                     const sizeupPart = call.message.split('on scene, ')[1];
                     if (sizeupPart) {
-                        await fetch('/api/add-comment', {
+                        await fetch('${API_BASE}/api/add-comment', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -3996,7 +3998,7 @@
 
         async function loadTrainees() {
             try {
-                const response = await fetch('/api/trainees');
+                const response = await fetch('${API_BASE}/api/trainees');
                 const data = await response.json();
                 
                 if (data.status === 'success') {
@@ -4021,7 +4023,7 @@
 
         async function loadScenarios() {
             try {
-                const response = await fetch('/api/scenarios');
+                const response = await fetch('${API_BASE}/api/scenarios');
                 const data = await response.json();
                 
                 if (data.status === 'success') {
@@ -4047,7 +4049,7 @@
             };
             
             try {
-                const response = await fetch('/api/trainee', {
+                const response = await fetch('${API_BASE}/api/trainee', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
@@ -4077,7 +4079,7 @@
             }
             
             try {
-                const response = await fetch('/api/evaluation/start', {
+                const response = await fetch('${API_BASE}/api/evaluation/start', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ trainee_id: parseInt(traineeId), scenario_name: scenarioName })
@@ -4123,7 +4125,7 @@
 
         function startScenarioTimeline(scenarioName) {
             // Fetch timeline triggers from backend
-            fetch('/api/scenario-timeline/' + encodeURIComponent(scenarioName))
+            fetch('${API_BASE}/api/scenario-timeline/' + encodeURIComponent(scenarioName))
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
@@ -4198,7 +4200,7 @@
             if (!currentSessionId) return;
             
             // Send to backend for logging
-            fetch('/api/evaluation/metric', {
+            fetch('${API_BASE}/api/evaluation/metric', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -4238,7 +4240,7 @@
             if (!currentSessionId) return;
             
             try {
-                const response = await fetch('/api/evaluation/end', {
+                const response = await fetch('${API_BASE}/api/evaluation/end', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ session_id: currentSessionId })
@@ -4349,7 +4351,7 @@
                     console.log('Sending radio_call to backend:', body.radio_call);
                 }
                 
-                const response = await fetch('/api/voice/transcribe', {
+                const response = await fetch('${API_BASE}/api/voice/transcribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body)
@@ -4446,7 +4448,7 @@
 
         async function playUnitTTS(text, channelName, unitCallSign = null) {
             try {
-                const response = await fetch('/api/tts', {
+                const response = await fetch('${API_BASE}/api/tts', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ text, source: 'radio', unit_call_sign: unitCallSign })
@@ -4469,7 +4471,7 @@
             if (acknowledged) {
                 const newStatus = call.type === 'enroute' ? 'EN' : 'AR';
                 try {
-                    await fetch('/api/unit-status', {
+                    await fetch('${API_BASE}/api/unit-status', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -4482,7 +4484,7 @@
                     if (call.type === 'arrived' && call.message.includes('on scene,')) {
                         const sizeupPart = call.message.split('on scene, ')[1];
                         if (sizeupPart) {
-                            await fetch('/api/add-comment', {
+                            await fetch('${API_BASE}/api/add-comment', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
