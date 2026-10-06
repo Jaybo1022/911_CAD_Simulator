@@ -36,6 +36,10 @@ app.add_middleware(
 # Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+@app.get("/")
+async def root():
+     return FileResponse("index.html")
+
 # Database connection helper
 def get_db_connection():
     conn = sqlite3.connect(settings.database_path)
